@@ -1,6 +1,6 @@
 <center> <h1>Easy Shopping Project Guideline</h1> </center>
 
-- [1. Mycroft (voice assistant) Installation](#1-mycroft-voice-assistant-installation)
+- [1. Voice Assistant Platform Installation](#1-voice-assistant-platform-installation)
   - [1.1 Create Your Mycroft Account](#11-create-your-mycroft-account)
   - [1.2 Install Mycroft](#12-install-mycroft)
   - [1.3 Pair Your Device](#13-pair-your-device)
@@ -9,10 +9,10 @@
     - [1.5.1 Mycroft Skills Kit (MSK)](#151-mycroft-skills-kit-msk)
     - [1.5.2  Create New Skill](#152--create-new-skill)
   - [1.6 Skill Structure](#16-skill-structure)
-- [2. ESA](#2-esa)
+- [2. Easy-Shopping Assistant (ESA)](#2-easy-shopping-assistant-esa)
   - [2.1 ESA Introduction](#21-esa-introduction)
   - [2.2 ESA Use Case Design](#22-esa-use-case-design)
-- [3. Mycroft skill development](#3-mycroft-skill-development)
+- [3. Voice Assistant Development (ESA)](#3-voice-assistant-development-esa)
   - [3.1 Intent (How to let user make request?)](#31-intent-how-to-let-user-make-request)
     - [3.1.1  Padatious Intents (used in use case 1)](#311--padatious-intents-used-in-use-case-1)
     - [3.1.2 Adapt Intents (used in use case 2)](#312-adapt-intents-used-in-use-case-2)
@@ -25,7 +25,7 @@
   - [3.4 Prompts (How to deal with the disorder conversation?)](#34-prompts-how-to-deal-with-the-disorder-conversation)
     - [3.4.1 Add prompts for Yes/No Questions](#341-add-prompts-for-yesno-questions)
     - [3.4.2 Add expect_response parameter for returning responses to the intent parser](#342-add-expect_response-parameter-for-returning-responses-to-the-intent-parser)
-- [4. Integration](#4-integration)
+- [4. Voice Assistant Integration (ESA)](#4-voice-assistant-integration-esa)
   - [4.1 To make the ESA see the items (use python program to take a picture)](#41-to-make-the-esa-see-the-items-use-python-program-to-take-a-picture)
     - [4.1.1 Install OpenCV](#411-install-opencv)
     - [4.1.2 Test Taking Pictures](#412-test-taking-pictures)
@@ -44,7 +44,9 @@
     - [4.4.3 exit the virtual environment](#443-exit-the-virtual-environment)
   - [4.5 Add Dependency](#45-add-dependency)
 
-# 1. Mycroft (voice assistant) Installation
+# 1. Voice Assistant Platform Installation
+
+In this part, you will install Mycroft, and have a try on this voice assistant.
 
 ## 1.1 Create Your Mycroft Account
 
@@ -285,7 +287,7 @@ def create_skill(): return EasyShopping()
 ```
 
 
-# 2. ESA
+# 2. Easy-Shopping Assistant (ESA)
 
 The project aims to integrate Mycroft (a voice assistant platform) with computer vision technology to implement an intelligent reasoning system. The system is designed for blind people to have an easier shopping experience. There are two use cases related to this scenario to help blind people find corresponding goods they demand in the supermarket using the designed Easy Shopping system.
 
@@ -309,7 +311,7 @@ User will take a photo of the goods in his/her hand. And then ask Mycroft what i
 
 
 
-# 3. Mycroft skill development
+# 3. Voice Assistant Development (ESA)
 
 ## 3.1 Intent (How to let user make request?)
 
@@ -735,7 +737,7 @@ The above example `speak_dialog()` tells the user other things they can do with 
 
 
 
-# 4. Integration
+# 4. Voice Assistant Integration (ESA)
 
 ![](complete.png)
 
