@@ -1,30 +1,52 @@
 <center> <h1>Easy Shopping Project Guideline</h1> </center>
 
+- [1. Mycroft (voice assistant) Installation](#1-mycroft-voice-assistant-installation)
+  - [1.1 Create Your Mycroft Account](#11-create-your-mycroft-account)
+  - [1.2 Install Mycroft](#12-install-mycroft)
+  - [1.3 Pair Your Device](#13-pair-your-device)
+  - [1.4 Manage MyCroft Skills (MSM)](#14-manage-mycroft-skills-msm)
+  - [1.5 Create first MyCroft skill](#15-create-first-mycroft-skill)
+    - [1.5.1 Mycroft Skills Kit (MSK)](#151-mycroft-skills-kit-msk)
+    - [1.5.2  Create New Skill](#152--create-new-skill)
+  - [1.6 Skill Structure](#16-skill-structure)
+- [2. ESA](#2-esa)
+  - [2.1 ESA Introduction](#21-esa-introduction)
+  - [2.2 ESA Use Case Design](#22-esa-use-case-design)
+- [3. Mycroft skill development](#3-mycroft-skill-development)
+  - [3.1 Intent (How to let user make request?)](#31-intent-how-to-let-user-make-request)
+    - [3.1.1  Padatious Intents (used in use case 1)](#311--padatious-intents-used-in-use-case-1)
+    - [3.1.2 Adapt Intents (used in use case 2)](#312-adapt-intents-used-in-use-case-2)
+  - [3.2 Statement (How to make MyCroft response interactively?)](#32-statement-how-to-make-mycroft-response-interactively)
+    - [3.2.1 Simple statement](#321-simple-statement)
+    - [3.2.2 Statements with variables](#322-statements-with-variables)
+  - [3.3 Conversational Context (How to make the conversation in order?)](#33-conversational-context-how-to-make-the-conversation-in-order)
+    - [3.3.1 Add context and remove context](#331-add-context-and-remove-context)
+    - [3.3.2 Another way to control the order](#332-another-way-to-control-the-order)
+  - [3.4 Prompts (How to deal with the disorder conversation?)](#34-prompts-how-to-deal-with-the-disorder-conversation)
+    - [3.4.1 Add prompts for Yes/No Questions](#341-add-prompts-for-yesno-questions)
+    - [3.4.2 Add expect_response parameter for returning responses to the intent parser](#342-add-expect_response-parameter-for-returning-responses-to-the-intent-parser)
+- [4. Integration](#4-integration)
+  - [4.1 To make the ESA see the items (use python program to take a picture)](#41-to-make-the-esa-see-the-items-use-python-program-to-take-a-picture)
+    - [4.1.1 Install OpenCV](#411-install-opencv)
+    - [4.1.2 Test Taking Pictures](#412-test-taking-pictures)
+  - [4.2 To make the ESA recognize the items (use Google Vision API)](#42-to-make-the-esa-recognize-the-items-use-google-vision-api)
+    - [4.2.1 Introduction](#421-introduction)
+    - [4.2.2 Get use of the Vision API](#422-get-use-of-the-vision-api)
+    - [4.2.3 Test your Vision API](#423-test-your-vision-api)
+  - [4.3 Integration with ESA](#43-integration-with-esa)
+    - [4.3.1 Create a function called take_photo()](#431-create-a-function-called-take_photo)
+    - [4.3.2 Integration with take_photo()](#432-integration-with-take_photo)
+    - [4.3.3 CV API Exploration](#433-cv-api-exploration)
+    - [4.3.4 Integration with CV API](#434-integration-with-cv-api)
+  - [4.4 To make the ESA get the color information of the item (use webcolor)](#44-to-make-the-esa-get-the-color-information-of-the-item-use-webcolor)
+    - [4.4.1 Install webcolor and Scipy](#441-install-webcolor-and-scipy)
+    - [4.4.2 Test the function of turning RGB code to name](#442-test-the-function-of-turning-rgb-code-to-name)
+    - [4.4.3 exit the virtual environment](#443-exit-the-virtual-environment)
+  - [4.5 Add Dependency](#45-add-dependency)
 
-# 1. Project Objectives
+# 1. Mycroft (voice assistant) Installation
 
-The project aims to integrate Mycroft (a voice assistant platform) with computer vision technology to implement an intelligent reasoning system. The system is designed for blind people to have an easier shopping experience. There are two use cases related to this scenario to help blind people find corresponding goods they demand in the supermarket using the designed Easy Shopping system.
-
-## 1.1 Introduction 
-
-In daily life, it is very inconvenient for blind people to travel and live alone, especially when they go to the supermarket to buy goods. It is impossible if they go shopping without other’s help. Therefore, our Easy Shopping system is designed to provide them with a personal shopping assistant to help them locate desired goods and make them enjoy shopping. To some extent, our system can partly replace the eyes. When blind people go to the supermarket, they do not need the assistance from families or staff anymore. 
-
-## 1.2 Use Case Design
-
-According to the introduction above, we design two use cases of this Easy Shopping project for blind people using it for shopping alone.
-
-> Use case 1: Find the item from multiple items.
-
-User will take a photo of the goods shelf in front of him/her. And then ask Mycroft if the item they want is in this photo. If the item they want is in the photo(in front of the user), Mycroft will also give the user a general position of that item.
-
-> Use case 2: Get the detailed information of the item in hand.
-
-User will take a photo of the goods in his/her hand. And then ask Mycroft what is the item in the hand. Mycroft will also give the detailed information of the goods, for example, the brand, the colour.
-[img temp]
-
-# 2. Mycroft (voice assistant) installation
-
-## 2.1 Create your Mycroft account
+## 1.1 Create Your Mycroft Account
 
 You can go to the My Account page to create your own Mycroft account by using your Facebook account or your Google account or your GitHub account or by signing up with your email address and setting your password.
 
@@ -34,7 +56,7 @@ After log in, you are directed to your Mycroft Home dashboard, you are able to m
 
 ![](2/2.png)
 
-## 2.2 Install Mycroft
+## 1.2 Install Mycroft
 
 Before installing the Mycroft on your device, you should make sure your operating system is Linux or you have the Linux VM on your machine. If you have not installed the Linux VM yet, you may refer to the steps below to install the VM on your machine.
 
@@ -52,7 +74,7 @@ cd mycroft-core
 sudo reboot
 ```
 
-## 2.3 Pair your device
+## 1.3 Pair Your Device
 Before pairing your device, you should make sure you already have a Mycroft account and you have logged into your account, if you have not created your Mycroft account, you can refer to the 2.1 to create an account.
 Click the Add Device at the home.mycroft.ai account page:
 
@@ -71,7 +93,7 @@ After you get the 6-character Registration Code(pairing code) successfully, you 
 
 Once complete the setting, click 'NEXT' to pair the Device. Wait a few seconds, and then you'll be taken to a new screen confirming your Pairing has been successfully completed.
 
-## 2.4 Mycroft skill
+## 1.4 Manage MyCroft Skills (MSM)
 
 1. Install and remove Mycroft skill.
     1. From the skill Marketplace
@@ -132,156 +154,9 @@ For example:
     mycroft-msm info skill-name
     ```
 
-# 3. API installation
+## 1.5 Create first MyCroft skill
 
-## 3.1 Google CV API
-In this part, you will install a CV API for our later vision analysis. For this project, we choose a Vision AI product from Google.
-
-### 3.1.1 Introduction
-(https://cloud.google.com/vision)
-Vision AI contains two products, AutoML Vision and pre-trained Vision API. AutoML Vision is for training custom vision models with your own dataset, and Vision API is a pre-trained model which can be directly used to do face detection, logo detection, object localization and so on. For a full list of the features of Vision API, you can refer to https://cloud.google.com/vision/docs/features-list.
-
-In this project, we choose this pretrained model, Vision API.
-
-### 3.1.2 Get use of the Vision API
-Before you get use of the API, you need several steps. You need a credit card to add the payment information, but it has a free trail and won’t charge you until you upgrade.
-
-- Step 1: Create a Google Cloud account. The account can be the same as your Google account (same email address), and you need to add payment information here.
-Go to https://console.cloud.google.com/freetrial/signup/.
-
-![](3/1.png)
-
-After you input the payment information verification, you can click START MY FREE TRIAL.
-
-- Step 2: Go to Google Cloud Console dashboard, sign in with your google account, and create a new project.
-https://console.cloud.google.com/projectselector2/home/dashboard
-Click the CREATE PROJECT
-
-![](3/2.png)
-
-Give a name to your project. Click CRATE. Here you can use easy shopping.
-
-![](3/3.png)
-
-- Step 3: Enable Cloud Vision API
-In the project dashboard, and make sure you are still in the ‘easy shopping’ project you just created above, click Go to APIs overview
-![](3/4.png)
-
-Search cloud vision API, and choose the correct one.
-![](3/5.png)
-
-Click ENABLE to enable Cloud Vision API
-![](3/6.png)
-
-- Step 4: create Google API Key
-Make sure you still in the ‘easy shopping’ project, and in the ‘APIs & Services’, click ‘Credentials’, and under CREATE CREDENTIALS, choose ‘API key’
-![](3/7.png)
-Choose CLOSE. You can copy the API key for further use.
-![](3/8.png)
-
-### 3.1.3 Test your Vision API
-
-Download the project file from...
-
-The two files you need to focus in this part are: 
-
-> cvAPI/util.py (this file will be used in our project)
-> cvAPI/test/testCVapi.py (this file is just for test)
-
-- Step 1: Replace the key with your API key
-
-Go to file cvAPI/util.py, in the ‘set api key’ part, assign your API key to the api_key variable.
-
-- Step 2: Go to file test/testCVapi.py.
-
-You can replace the image_file variable to any path of your own image. 
-The major function is callAPI:
-the first argument is the base64 format of the image, 
-The second argument can be ‘LABEL’ or ‘LOC’, it’s used to control the response content. You can explore the difference between the two responses, it’s designed for different use cases and we will discuss it later.
-
-If you see some response with no error, a key with ‘response’, and other information about the image, then you have successfully set up the Google Vision API.
-
-```
-{'responses': [{'labelAnnotations': [{'mid': '/m/02wbm', 'description': 'Food', 'score': 0.9862577, 'topicality': 0.9862577}, {'mid': '/m/07xgrh', 'description': 'Ingredient', 'score': 0.9086209, 'topicality': 0.9086209}, {'mid': '/m/01ykh', 'description': 'Cuisine', 'score': 0.8679337, 'topicality': 0.8679337}, {'mid': '/m/02q08p0', 'description': 'Dish', 'score': 0.8582634, 'topicality': 0.8582634}, {'mid': '/m/0p57p', 'description': 'Recipe', 'score': 0.8374579, 'topicality': 0.8374579}, {'mid': '/m/0l6sg', 'description': 'Breakfast cereal', 'score': 0.8305864, 'topicality': 0.8305864}, {'mid': '/m/022tld', 'description': 'Staple food', 'score': 0.8022431, 'topicality': 0.8022431}, {'mid': '/m/021s_r', 'description': 'Convenience food', 'score': 0.80196214, 'topicality': 0.80196214}, {'mid': '/m/0h55b', 'description': 'Junk food', 'score': 0.7742749, 'topicality': 0.7742749}, {'mid': '/m/04q6ng', 'description': 'Comfort food', 'score': 0.67553234, 'topicality': 0.67553234}]}]}
-```
-
-Then you can go back to Google Cloud Platform, go to ‘APIs & Services’, you can see some statistics of your API calls.
-![](3/10.png)
-
-If you get a response with a key ‘error’, then you need to read the error message carefully and try to resolve it. A common error may be due to the billing.
-
-```
-{'error': {'code': 403, 'message': 'This API method requires billing to be enabled. Please enable billing on project #1025635532761 by visiting https://console.developers.google.com/billing/enable?project=1025635532761 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.', 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Google developers console billing', 'url': 'https://console.developers.google.com/billing/enable?project=1025635532761'}]}, {'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'BILLING_DISABLED', 'domain': 'googleapis.com', 'metadata': {'service': 'vision.googleapis.com', 'consumer': 'projects/1025635532761'}}]}}
-```
-
-In google cloud platform, search ‘billing project’
-![](3/12.png)
-
- Make sure the billing account of your project is enabled. Below is the wrong status.
-![](3/13.png)
-
-## 3.2 opencv
-
-In this part, you will need to install the python-opencv library, this library is used to take pictures and preprocess the image.
-
-### 3.2.1 Install OpenCV
-
-This library needs to be installed in the virtual environment in Mycroft so that in our later development you won’t get errors.
-Go to the mycroft-core folder, which you have cloned before.
-
-```
-cd ~/mycroft-core # or where ever you cloned Mycroft-core
-activate the virtual environment
-source venv-activate.sh
-Install opencv-python
-pip install opencv-python
-```
-
-### 3.2.2 test taking pictures
-
-Go to cvAPI/test/testOpencv.py, the major function is the take_photo(). When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the test/photo folder, named with a time stamp.
-
-When we later use the function in Mycroft application, it will be a little different, but the logic is the same. Now you just need to make sure your OpenCV library and camera works well.
-
-Make sure you are still in the virtual environment of Mycroft, run the file.
-
-
-![](3/14.png)
-
-## 3.3 webcolor and Scipy
-
-webcolor is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
-
-### 3.3.1 install webcolor and Scipy
-
-Make sure you are still in the virtual environment of Mycroft, or you can refer to the 3.2.1 install OpenCV to enter the virtual environment. Then run the command
-
-```
-pip install scipy
-pip install webcolor
-```
-
-### 3.3.2 test RGB to name function
-Go to cvAPI/test/testRGB2name.py.
-
-The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
-If you get the 
-
-![](3/15.png)
-
-### 3.3.3 exit the virtual environment 
-Then run
-```
-deactivate 
-```
-Can exit the virtual environment
-![](3/16.png)
-
-# 4. Mycroft skill development
-
-## 4.1 Create Your Own Skill
-
-### 4.1.1 Mycroft Skills Kit (MSK)
+### 1.5.1 Mycroft Skills Kit (MSK)
 
 To set up the foundations of your own skill, you need to use the Mycroft Skills Kit (MSK) that comes installed with Mycroft. Go to the mycroft-core directory and check for the file 
 
@@ -307,7 +182,7 @@ pip install msm
 ![](4/2.png)
 
 
-### 4.1.2  Create New Skill
+### 1.5.2  Create New Skill
 Now you can use MKS to create new skills. 
 Run below commands:
 ```
@@ -353,7 +228,7 @@ Finally, paste the token to the shell and successfully save the skill under the 
 The same directory hierarchy is pushed to your GitHub repo.
 ![](4/11.png)
 
-### 4.1.3 Initial Skill Structure
+## 1.6 Skill Structure
 
 After creating the skill, you can navigate to the skill directory to see the initial number of files and folders. The figure below shows the structure of newly created skills, and you could check each of these in turn.
 
@@ -409,11 +284,38 @@ This method is to return your new skill. This is required by Mycroft and is resp
 def create_skill(): return EasyShopping()
 ```
 
-## 4.2 Intent
+
+# 2. ESA
+
+The project aims to integrate Mycroft (a voice assistant platform) with computer vision technology to implement an intelligent reasoning system. The system is designed for blind people to have an easier shopping experience. There are two use cases related to this scenario to help blind people find corresponding goods they demand in the supermarket using the designed Easy Shopping system.
+
+## 2.1 ESA Introduction 
+
+In daily life, it is very inconvenient for blind people to travel and live alone, especially when they go to the supermarket to buy goods. It is impossible if they go shopping without other’s help. Therefore, our Easy Shopping system is designed to provide them with a personal shopping assistant to help them locate desired goods and make them enjoy shopping. To some extent, our system can partly replace the eyes. When blind people go to the supermarket, they do not need the assistance from families or staff anymore. 
+
+## 2.2 ESA Use Case Design
+
+According to the introduction above, we design two use cases of this Easy Shopping project for blind people using it for shopping alone.
+
+> Use case 1: Find the item from multiple items.
+
+User will take a photo of the goods shelf in front of him/her. And then ask Mycroft if the item they want is in this photo. If the item they want is in the photo(in front of the user), Mycroft will also give the user a general position of that item.
+
+> Use case 2: Get the detailed information of the item in hand.
+
+User will take a photo of the goods in his/her hand. And then ask Mycroft what is the item in the hand. Mycroft will also give the detailed information of the goods, for example, the brand, the colour.
+
+![temp](.png)
+
+
+
+# 3. Mycroft skill development
+
+## 3.1 Intent (How to let user make request?)
 
 An intent is the task that you intend to accomplish when you say something. The role of the intent parser is to extract from your speech key data elements that specify your intent.
 
-### 4.2.1  Padatious Intents (used in use case 1)
+### 3.1.1  Padatious Intents (used in use case 1)
 
 1. Creating Intent
 Padatious uses a series of example sentences to train a machine learning model to identify an intent. Taking the ‘is there any goods’ intent as an example, if you want to respond to questions about taking goods in front of you,  you need to create an intent file named is.there.any.goods.intent under the locale/en-us/ directory. 
@@ -455,7 +357,7 @@ def handle_is_there_any_goods(self, message):
 Check with Mycroft that your padatious intents are successfully created.
 ![](4/m0.png)
 
-### 4.2.2 Adapt Intents(used in use case 2)
+### 3.1.2 Adapt Intents (used in use case 2)
 
 1. Defining keywords and entities
 
@@ -542,11 +444,11 @@ Check with Mycroft that all your adapt intents are successfully created.
 ![](4/m2.png)
 ![](4/m3.png)
 
-## 4.3 Statement
+## 3.2 Statement (How to make MyCroft response interactively?)
 
 A statement is any information spoken by Mycroft to the User.
 
-### 4.3.1 Simple statement
+### 3.2.1 Simple statement
 The first intent with the EasyShoppingSkill, view.goods.intent handels the inquiries, take.photo.dialog provides the statements for Mycroft to speak in reply to that inquiry.
 
 Sample contents of the Intent and dialog files:
@@ -570,7 +472,7 @@ Check with Mycroft that all simple statements can work successfully.
 ![](4/m4.png)
 
 
-### 4.3.2 Statements with variables
+### 3.2.2 Statements with variables
 
 Compared to the above simple statement, the .dialog file of statements with variables includes a variable named type. The variable is a placeholder in the statement specifying where text may be inserted. The speak_dialog() method accepts a dictionary as an optional parameter. If that dictionary contains an entry for a variable named in the statement, then the value from the dictionary will be inserted at the placeholder's location. Taking the above ‘is there any goods’ intent as an example, there are two .dialog files for this intent, which are yes.goods.dialog and no.goods.dialog.
 
@@ -640,10 +542,10 @@ Check with Mycroft that all statements with variables can work successfully.
 ![](4/m8.png)
 
 
-## 4.4 Conversational context
+## 3.3 Conversational Context (How to make the conversation in order?)
 Until now, you have created intents and statements so that you can do basic interaction with Mycroft. However, the problem is that the intent order matters. In both cases, the users should ask Mycroft to take a photo first then ask other questions. In Mycroft, you can add context to deal with this.
 
-### 4.4.1 Add context and remove context
+### 3.3.1 Add context and remove context
 Unfortunately, context is currently only available with the Adapt Intent Parser, and is not yet available for Padatious. Let’s first use context to deal with the intent order in use case 2.
 
 Let’s review use case 2 again. The relationship among the intents in use case 2 is shown in the figure below. 
@@ -724,7 +626,7 @@ def handle_no_context2(self, message):
     self.speak('Please let me have a look at what\'s on your hand first.')
 ```
 
-### 4.4.2 Another way to control the order
+### 3.3.2 Another way to control the order
 
 Now you need to deal with the order problem of Padatious intent. 
 Similarly, let’s review the use case 1 and their order relationship.
@@ -782,11 +684,11 @@ def handle_no_context1(self, message):
     self.speak('Please let me have a look at what\'s in front of you first.')
 ```
 
-## 4.5 Prompts
+## 3.4 Prompts (How to deal with the disorder conversation?)
 
 A prompt is any question or statement spoken by Mycroft that expects a response from the User.
 
-### 4.5.1 Add prompts for Yes/No Questions
+### 3.4.1 Add prompts for Yes/No Questions
 
 - ask_yesno() is for checking if the response contains "yes" or "no" like phrases.
 
@@ -811,7 +713,7 @@ In the above code, you have asked the user if they want to take a photo, Mycroft
 
 The ​​EasyShoppingSkill uses `ask_yesno()` two times, one is in the use case 1, another is in the use case 2.
 
-### 4.5.2 Add expect_response parameter for returning responses to the intent parser
+### 3.4.2 Add expect_response parameter for returning responses to the intent parser
 
 So far you have looked at ways to prompt the User, and return their response directly to our Skill. It is also possible to speak some dialog, and activate the listener, directing the response back to the standard intent parsing engine. You may do this to let the user trigger another Skill, or because you want to make use of your own intents to handle the response.
 
@@ -831,13 +733,134 @@ def handle_ask_item_detail(self, detail, detail_str):
 
 The above example `speak_dialog()` tells the user other things they can do with their Mycroft device while they have been told the item’s detailed information, for example the brand, the colour. 
 
-# 5. Integration
+
+
+# 4. Integration
 
 ![](complete.png)
 
-## 5.1 Add camera
+## 4.1 To make the ESA see the items (use python program to take a picture)
 
-### 5.1.1 Create a function called take_photo()
+In this part, you will need to install the python-opencv library and work with the camera.
+
+### 4.1.1 Install OpenCV
+
+This library needs to be installed in the virtual environment in Mycroft so that in our later development you won’t get errors.
+Go to the mycroft-core folder, which you have cloned before.
+
+```
+cd ~/mycroft-core # or where ever you cloned Mycroft-core
+activate the virtual environment
+source venv-activate.sh
+Install opencv-python
+pip install opencv-python
+```
+
+### 4.1.2 Test Taking Pictures
+
+Go to cvAPI/test/testOpencv.py, the major function is the take_photo(). When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the test/photo folder, named with a time stamp.
+
+When we later use the function in Mycroft application, it will be a little different, but the logic is the same. Now you just need to make sure your OpenCV library and camera works well.
+
+Make sure you are still in the virtual environment of Mycroft, run the file.
+
+
+![](3/14.png)
+
+
+## 4.2 To make the ESA recognize the items (use Google Vision API)
+
+In this part, you will install a CV API for our later vision analysis. For this project, we choose a Vision AI product from Google.
+
+### 4.2.1 Introduction
+(https://cloud.google.com/vision)
+Vision AI contains two products, AutoML Vision and pre-trained Vision API. AutoML Vision is for training custom vision models with your own dataset, and Vision API is a pre-trained model which can be directly used to do face detection, logo detection, object localization and so on. For a full list of the features of Vision API, you can refer to https://cloud.google.com/vision/docs/features-list.
+
+In this project, we choose this pretrained model, Vision API.
+
+### 4.2.2 Get use of the Vision API
+Before you get use of the API, you need several steps. You need a credit card to add the payment information, but it has a free trail and won’t charge you until you upgrade.
+
+- Step 1: Create a Google Cloud account. The account can be the same as your Google account (same email address), and you need to add payment information here.
+Go to https://console.cloud.google.com/freetrial/signup/.
+
+![](3/1.png)
+
+After you input the payment information verification, you can click START MY FREE TRIAL.
+
+- Step 2: Go to Google Cloud Console dashboard, sign in with your google account, and create a new project.
+https://console.cloud.google.com/projectselector2/home/dashboard
+Click the CREATE PROJECT
+
+![](3/2.png)
+
+Give a name to your project. Click CRATE. Here you can use easy shopping.
+
+![](3/3.png)
+
+- Step 3: Enable Cloud Vision API
+In the project dashboard, and make sure you are still in the ‘easy shopping’ project you just created above, click Go to APIs overview
+![](3/4.png)
+
+Search cloud vision API, and choose the correct one.
+![](3/5.png)
+
+Click ENABLE to enable Cloud Vision API
+![](3/6.png)
+
+- Step 4: create Google API Key
+Make sure you still in the ‘easy shopping’ project, and in the ‘APIs & Services’, click ‘Credentials’, and under CREATE CREDENTIALS, choose ‘API key’
+![](3/7.png)
+Choose CLOSE. You can copy the API key for further use.
+![](3/8.png)
+
+### 4.2.3 Test your Vision API
+
+Download the project file from...
+
+The two files you need to focus in this part are: 
+
+> cvAPI/util.py (this file will be used in our project)
+> cvAPI/test/testCVapi.py (this file is just for test)
+
+- Step 1: Replace the key with your API key
+
+Go to file cvAPI/util.py, in the ‘set api key’ part, assign your API key to the api_key variable.
+
+- Step 2: Go to file test/testCVapi.py.
+
+You can replace the image_file variable to any path of your own image. 
+The major function is callAPI:
+the first argument is the base64 format of the image, 
+The second argument can be ‘LABEL’ or ‘LOC’, it’s used to control the response content. You can explore the difference between the two responses, it’s designed for different use cases and we will discuss it later.
+
+If you see some response with no error, a key with ‘response’, and other information about the image, then you have successfully set up the Google Vision API.
+
+```
+{'responses': [{'labelAnnotations': [{'mid': '/m/02wbm', 'description': 'Food', 'score': 0.9862577, 'topicality': 0.9862577}, {'mid': '/m/07xgrh', 'description': 'Ingredient', 'score': 0.9086209, 'topicality': 0.9086209}, {'mid': '/m/01ykh', 'description': 'Cuisine', 'score': 0.8679337, 'topicality': 0.8679337}, {'mid': '/m/02q08p0', 'description': 'Dish', 'score': 0.8582634, 'topicality': 0.8582634}, {'mid': '/m/0p57p', 'description': 'Recipe', 'score': 0.8374579, 'topicality': 0.8374579}, {'mid': '/m/0l6sg', 'description': 'Breakfast cereal', 'score': 0.8305864, 'topicality': 0.8305864}, {'mid': '/m/022tld', 'description': 'Staple food', 'score': 0.8022431, 'topicality': 0.8022431}, {'mid': '/m/021s_r', 'description': 'Convenience food', 'score': 0.80196214, 'topicality': 0.80196214}, {'mid': '/m/0h55b', 'description': 'Junk food', 'score': 0.7742749, 'topicality': 0.7742749}, {'mid': '/m/04q6ng', 'description': 'Comfort food', 'score': 0.67553234, 'topicality': 0.67553234}]}]}
+```
+
+Then you can go back to Google Cloud Platform, go to ‘APIs & Services’, you can see some statistics of your API calls.
+![](3/10.png)
+
+If you get a response with a key ‘error’, then you need to read the error message carefully and try to resolve it. A common error may be due to the billing.
+
+```
+{'error': {'code': 403, 'message': 'This API method requires billing to be enabled. Please enable billing on project #1025635532761 by visiting https://console.developers.google.com/billing/enable?project=1025635532761 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.', 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Google developers console billing', 'url': 'https://console.developers.google.com/billing/enable?project=1025635532761'}]}, {'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'BILLING_DISABLED', 'domain': 'googleapis.com', 'metadata': {'service': 'vision.googleapis.com', 'consumer': 'projects/1025635532761'}}]}}
+```
+
+In google cloud platform, search ‘billing project’
+![](3/12.png)
+
+ Make sure the billing account of your project is enabled. Below is the wrong status.
+![](3/13.png)
+
+
+
+## 4.3 Integration with ESA
+
+
+### 4.3.1 Create a function called take_photo()
 
 ```python
 def take_photo(img_queue):
@@ -869,7 +892,8 @@ def take_photo(img_queue):
 
 Using the `take_photo()` function, the photo will be taken in a specific time duration. Later this photo will be used in the Google cv api. 
 
-5.1.2 Integrating take_photo in the use cases
+### 4.3.2 Integration with take_photo()
+
 Use case 1:
 
 ```python
@@ -892,9 +916,8 @@ def handle_view_goods(self, message):
 
 use case 2 should also add `take_photo()` function, similar as use case 1.
 
-## 5.2 Add cv api
 
-### 5.2.1 cv api exploration
+### 4.3.3 CV API Exploration
 
 There are two cv functions you can use. 
 
@@ -938,7 +961,7 @@ The structure of the return is as follows.
 }
 ```
 
-### 5.2.2 Integration with cv api
+### 4.3.4 Integration with CV API
 
 Now it’s time to replace some variable value with the cv api return.
 You can add the try-catch block when calling API since sometimes some error may return.
@@ -998,7 +1021,42 @@ def handle_is_there_any_goods(self, message):
 
 The above code example is for use case 1. Do the similar thing for use case 2.
 
-## 5.3 add dependency
+
+## 4.4 To make the ESA get the color information of the item (use webcolor)
+
+webcolor is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
+
+### 4.4.1 Install webcolor and Scipy
+
+Make sure you are still in the virtual environment of Mycroft, or you can refer to the [3.2.1 install OpenCV]() to enter the virtual environment. Then run the command
+
+```
+pip install scipy
+pip install webcolor
+```
+
+### 4.4.2 Test the function of turning RGB code to name
+
+Go to cvAPI/test/testRGB2name.py.
+
+The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
+If you get the 
+
+![](3/15.png)
+
+### 4.4.3 exit the virtual environment 
+
+Then run
+```
+deactivate 
+```
+Can exit the virtual environment
+![](3/16.png)
+
+
+
+
+## 4.5 Add Dependency
 
 Now you are almost done!
 
