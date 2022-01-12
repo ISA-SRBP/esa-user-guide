@@ -29,6 +29,7 @@
   - [4.1 To make the ESA see the items (use python program to take a picture)](#41-to-make-the-esa-see-the-items-use-python-program-to-take-a-picture)
     - [4.1.1 Install OpenCV](#411-install-opencv)
     - [4.1.2 Test Taking Pictures](#412-test-taking-pictures)
+    - [4.1.3 Troubleshooting](#413-troubleshooting)
   - [4.2 To make the ESA recognize the items (use Google Vision API)](#42-to-make-the-esa-recognize-the-items-use-google-vision-api)
     - [4.2.1 Introduction](#421-introduction)
     - [4.2.2 Get use of the Vision API](#422-get-use-of-the-vision-api)
@@ -38,8 +39,8 @@
     - [4.3.2 Integration with take_photo()](#432-integration-with-take_photo)
     - [4.3.3 CV API Exploration](#433-cv-api-exploration)
     - [4.3.4 Integration with CV API](#434-integration-with-cv-api)
-  - [4.4 To make the ESA get the color information of the item (use webcolor)](#44-to-make-the-esa-get-the-color-information-of-the-item-use-webcolor)
-    - [4.4.1 Install webcolor and Scipy](#441-install-webcolor-and-scipy)
+  - [4.4 To make the ESA get the color information of the item (use webcolors)](#44-to-make-the-esa-get-the-color-information-of-the-item-use-webcolors)
+    - [4.4.1 Install webcolors and Scipy](#441-install-webcolors-and-scipy)
     - [4.4.2 Test the function of turning RGB code to name](#442-test-the-function-of-turning-rgb-code-to-name)
     - [4.4.3 exit the virtual environment](#443-exit-the-virtual-environment)
   - [4.5 Add Dependency](#45-add-dependency)
@@ -160,9 +161,7 @@ For example:
 
 ### 1.5.1 Mycroft Skills Kit (MSK)
 
-To set up the foundations of your own skill, you need to use the Mycroft Skills Kit (MSK) that comes installed with Mycroft. Go to the mycroft-core directory and check for the file 
-
-mycroft-msk (for create) and mycroft-msm (for install) .
+To set up the foundations of your own skill, you need to use the Mycroft Skills Kit (MSK) that comes installed with Mycroft. Go to the mycroft-core directory and check for the file `mycroft-msk` (for create) and `mycroft-msm` (for install)
 
 Run below commands:
 ```
@@ -203,7 +202,7 @@ If it is your first time to create a new skill, you need to configure your Githu
 
 Then, you need to file up below fields:
 > 1. Skill name which should be unique that different with any other skill in your device
-> 2. Utterance 
+> 2. Utterance
 > 3. Response
 > 4. One line description 
 > 5. Long description
@@ -214,6 +213,39 @@ Then, you need to file up below fields:
 > 10. Licenses  
 > 11. Python packages dependencies
 > 12. Personal Access Token which you can generate against GitHub and input the field
+
+The example input for this project could be as below:
+
+> skill name: `Easy Shopping`
+>
+> Class name: `EasyShoppingSkill` 
+> 
+> Repo name: `easy-shopping-skill` 
+> 
+> example phrases to trigger your skill: 
+`View goods` \
+`Is there any goods` \
+`Any goods` \
+`Read it`\
+`What's this`\
+`What is this`\
+`What are these`\
+`What are they`
+>
+> what your skill should say to respond: \
+`Wait a minute. I am checking for you.`\
+`One moment please. I am checking for you.`\
+`Could you show me your item clearly?`
+>
+> one line description for your skill: \
+`Help the visually impaired people to shop easily.`
+>
+> a long description:
+`A voice based virtual assistant which interacts with user through conversation. It can analyze photos/video taken by the user during shopping, and then read out detects the goods and their details shown in the photo/video back to the user.`
+>
+> author:
+> `NUS-ISS`
+
 ![](4/4.png)
 ![](4/5.png)
 
@@ -324,7 +356,10 @@ Padatious uses a series of example sentences to train a machine learning model t
 
 The sample phrases of the is.there.any.goods.intent:
 ```bash
-is there any {category}any {category} heredo you see any {category}i want some {category}
+is there any {category}
+any {category} here
+do you see any {category}
+i want some {category}
 ```
 These sample phrases do not require punctuation like a question mark. You can also leave out contractions such as "what's", as this will be automatically expanded to "what is" by Mycroft before the utterance is parsed. Each file should contain at least 4 examples for good modeling.
 
@@ -739,7 +774,7 @@ The above example `speak_dialog()` tells the user other things they can do with 
 
 # 4. Voice Assistant Integration (ESA)
 
-![](complete.png)
+![total archi](xx.png)
 
 ## 4.1 To make the ESA see the items (use python program to take a picture)
 
@@ -752,15 +787,17 @@ Go to the mycroft-core folder, which you have cloned before.
 
 ```
 cd ~/mycroft-core # or where ever you cloned Mycroft-core
-activate the virtual environment
+
+# activate the virtual environment
 source venv-activate.sh
-Install opencv-python
+
+# Install opencv-python
 pip install opencv-python
 ```
 
 ### 4.1.2 Test Taking Pictures
 
-Go to cvAPI/test/testOpencv.py, the major function is the take_photo(). When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the test/photo folder, named with a time stamp.
+Go to `cvAPI/test/testOpencv.py`, the major function is the `take_photo()`. When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the `test/photo` folder, named with a time stamp.
 
 When we later use the function in Mycroft application, it will be a little different, but the logic is the same. Now you just need to make sure your OpenCV library and camera works well.
 
@@ -769,18 +806,22 @@ Make sure you are still in the virtual environment of Mycroft, run the file.
 
 ![](3/14.png)
 
+### 4.1.3 Troubleshooting
+
+In Virtual Box, it may has problem opening the camera.
 
 ## 4.2 To make the ESA recognize the items (use Google Vision API)
 
-In this part, you will install a CV API for our later vision analysis. For this project, we choose a Vision AI product from Google.
+In this part, you will install a computer vision (CV) application programming interface (API) for our later vision analysis. For this project, we choose a Vision AI product from Google.
 
 ### 4.2.1 Introduction
-(https://cloud.google.com/vision)
+
 Vision AI contains two products, AutoML Vision and pre-trained Vision API. AutoML Vision is for training custom vision models with your own dataset, and Vision API is a pre-trained model which can be directly used to do face detection, logo detection, object localization and so on. For a full list of the features of Vision API, you can refer to https://cloud.google.com/vision/docs/features-list.
 
 In this project, we choose this pretrained model, Vision API.
 
 ### 4.2.2 Get use of the Vision API
+
 Before you get use of the API, you need several steps. You need a credit card to add the payment information, but it has a free trail and won’t charge you until you upgrade.
 
 - Step 1: Create a Google Cloud account. The account can be the same as your Google account (same email address), and you need to add payment information here.
@@ -818,8 +859,6 @@ Choose CLOSE. You can copy the API key for further use.
 
 ### 4.2.3 Test your Vision API
 
-Download the project file from...
-
 The two files you need to focus in this part are: 
 
 > cvAPI/util.py (this file will be used in our project)
@@ -827,14 +866,14 @@ The two files you need to focus in this part are:
 
 - Step 1: Replace the key with your API key
 
-Go to file cvAPI/util.py, in the ‘set api key’ part, assign your API key to the api_key variable.
+Go to file cvAPI/util.py, in the `set api key` part, assign your API key to the api_key variable.
 
 - Step 2: Go to file test/testCVapi.py.
 
 You can replace the image_file variable to any path of your own image. 
 The major function is callAPI:
 the first argument is the base64 format of the image, 
-The second argument can be ‘LABEL’ or ‘LOC’, it’s used to control the response content. You can explore the difference between the two responses, it’s designed for different use cases and we will discuss it later.
+The second argument can be `LABEL` or `LOC`, it’s used to control the response content. You can explore the difference between the two responses, it’s designed for different use cases and we will discuss it later.
 
 If you see some response with no error, a key with ‘response’, and other information about the image, then you have successfully set up the Google Vision API.
 
@@ -921,9 +960,10 @@ use case 2 should also add `take_photo()` function, similar as use case 1.
 
 ### 4.3.3 CV API Exploration
 
-There are two cv functions you can use. 
+There are two CV functions you can use. 
 
 1. getObjLabel.py
+
 This is for use case 1. It will detect all the objects in the image and get the position of every object. Then crop the image according to the objects’ position and call Google Vision API again to get the labels for every object. This method will call API multiple times, so it may be time 
 consuming sometimes.
 
@@ -1024,25 +1064,24 @@ def handle_is_there_any_goods(self, message):
 The above code example is for use case 1. Do the similar thing for use case 2.
 
 
-## 4.4 To make the ESA get the color information of the item (use webcolor)
+## 4.4 To make the ESA get the color information of the item (use webcolors)
 
-webcolor is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
+webcolors is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
 
-### 4.4.1 Install webcolor and Scipy
+### 4.4.1 Install webcolors and Scipy
 
-Make sure you are still in the virtual environment of Mycroft, or you can refer to the [3.2.1 install OpenCV]() to enter the virtual environment. Then run the command
+Make sure you are still in the virtual environment of Mycroft, or you can refer to the [4.1.1 Install OpenCV](#411-install-opencv) to enter the virtual environment. Then run the command
 
 ```
 pip install scipy
-pip install webcolor
+pip install webcolors
 ```
 
 ### 4.4.2 Test the function of turning RGB code to name
 
-Go to cvAPI/test/testRGB2name.py.
+Go to `cvAPI/test/testRGB2name.py`.
 
 The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
-If you get the 
 
 ![](3/15.png)
 
