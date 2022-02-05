@@ -34,20 +34,20 @@
     - [4.2.1 Introduction](#421-introduction)
     - [4.2.2 Get use of the Vision API](#422-get-use-of-the-vision-api)
     - [4.2.3 Test your Vision API](#423-test-your-vision-api)
-  - [4.3 Integration with ESA](#43-integration-with-esa)
-    - [4.3.1 Create a function called take_photo()](#431-create-a-function-called-take_photo)
-    - [4.3.2 Integration with take_photo()](#432-integration-with-take_photo)
-    - [4.3.3 CV API Exploration](#433-cv-api-exploration)
-    - [4.3.4 Integration with CV API](#434-integration-with-cv-api)
-  - [4.4 To make the ESA get the color information of the item (use webcolors)](#44-to-make-the-esa-get-the-color-information-of-the-item-use-webcolors)
-    - [4.4.1 Install webcolors and Scipy](#441-install-webcolors-and-scipy)
-    - [4.4.2 Test the function of turning RGB code to name](#442-test-the-function-of-turning-rgb-code-to-name)
-    - [4.4.3 exit the virtual environment](#443-exit-the-virtual-environment)
+  - [4.3 To make the ESA get the color information of the item (use webcolors)](#43-to-make-the-esa-get-the-color-information-of-the-item-use-webcolors)
+    - [4.3.1 Install webcolors and Scipy](#431-install-webcolors-and-scipy)
+    - [4.3.2 Test the function of turning RGB code to name](#432-test-the-function-of-turning-rgb-code-to-name)
+    - [4.3.3 exit the virtual environment](#433-exit-the-virtual-environment)
+  - [4.4 Integration with ESA](#44-integration-with-esa)
+    - [4.4.1 Create a function called take_photo()](#441-create-a-function-called-take_photo)
+    - [4.4.2 Integration with take_photo()](#442-integration-with-take_photo)
+    - [4.4.3 CV API Exploration](#443-cv-api-exploration)
+    - [4.4.4 Integration with CV API](#444-integration-with-cv-api)
   - [4.5 Add Dependency](#45-add-dependency)
 
 # 1. Voice Assistant Platform Installation
 
-In this part, you will install Mycroft, and have a try on this voice assistant.
+Mycroft is a voice assistant platform. In this part, you will install Mycroft, and have a try on this voice assistant.
 
 ## 1.1 Create Your Mycroft Account
 
@@ -321,7 +321,7 @@ def create_skill(): return EasyShopping()
 
 # 2. Easy-Shopping Assistant (ESA)
 
-The project aims to integrate Mycroft (a voice assistant platform) with computer vision technology to implement an intelligent reasoning system. The system is designed for blind people to have an easier shopping experience. There are two use cases related to this scenario to help blind people find corresponding goods they demand in the supermarket using the designed Easy Shopping system.
+The project aims to integrate Mycroft with computer vision technology to implement an intelligent reasoning system. The system is designed for blind people to have an easier shopping experience. There are two use cases related to this scenario to help blind people find corresponding goods they demand in the supermarket using the designed Easy Shopping system.
 
 ## 2.1 ESA Introduction 
 
@@ -810,6 +810,22 @@ Make sure you are still in the virtual environment of Mycroft, run the file.
 
 In Virtual Box, it may has problem opening the camera.
 
+- Step 1: Enable USB 2.0 or 3.0. Power off the virtual machine, go to `Settings` --> `Ports` --> `USB`. As shown below, click the checkbox.
+
+![](3/17.png)
+
+- Step 2: Select device. Open virtual machine, in tool bar, `Devices` -> `Webcams` -> the camera for your computer, e.g. Face Time HD Camera (build in). As shown below.
+
+![](3/18.png)
+
+- Step 3: Install VLC.
+
+```
+sudo apt install vlc
+```
+
+> Refers to https://linuxconfig.org/ubuntu-20-04-vlc-installation
+
 ## 4.2 To make the ESA recognize the items (use Google Vision API)
 
 In this part, you will install a computer vision (CV) application programming interface (API) for our later vision analysis. For this project, we choose a Vision AI product from Google.
@@ -898,10 +914,40 @@ In google cloud platform, search ‘billing project’
 
 
 
-## 4.3 Integration with ESA
+## 4.3 To make the ESA get the color information of the item (use webcolors)
+
+webcolors is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
+
+### 4.3.1 Install webcolors and Scipy
+
+Make sure you are still in the virtual environment of Mycroft, or you can refer to the [4.1.1 Install OpenCV](#411-install-opencv) to enter the virtual environment. Then run the command
+
+```
+pip install scipy
+pip install webcolors
+```
+
+### 4.3.2 Test the function of turning RGB code to name
+
+Go to `cvAPI/test/testRGB2name.py`.
+
+The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
+
+![](3/15.png)
+
+### 4.3.3 exit the virtual environment 
+
+Then run
+```
+deactivate 
+```
+Can exit the virtual environment
+![](3/16.png)
 
 
-### 4.3.1 Create a function called take_photo()
+## 4.4 Integration with ESA
+
+### 4.4.1 Create a function called take_photo()
 
 ```python
 def take_photo(img_queue):
@@ -933,7 +979,7 @@ def take_photo(img_queue):
 
 Using the `take_photo()` function, the photo will be taken in a specific time duration. Later this photo will be used in the Google cv api. 
 
-### 4.3.2 Integration with take_photo()
+### 4.4.2 Integration with take_photo()
 
 Use case 1:
 
@@ -958,7 +1004,7 @@ def handle_view_goods(self, message):
 use case 2 should also add `take_photo()` function, similar as use case 1.
 
 
-### 4.3.3 CV API Exploration
+### 4.4.3 CV API Exploration
 
 There are two CV functions you can use. 
 
@@ -1003,7 +1049,7 @@ The structure of the return is as follows.
 }
 ```
 
-### 4.3.4 Integration with CV API
+### 4.4.4 Integration with CV API
 
 Now it’s time to replace some variable value with the cv api return.
 You can add the try-catch block when calling API since sometimes some error may return.
@@ -1062,39 +1108,6 @@ def handle_is_there_any_goods(self, message):
 ```
 
 The above code example is for use case 1. Do the similar thing for use case 2.
-
-
-## 4.4 To make the ESA get the color information of the item (use webcolors)
-
-webcolors is a library used to transfer any RGB color code to a closest color name. To get the algorithm to work efficiently, we also need to use KDTree, which is under the Scipy library. 
-
-### 4.4.1 Install webcolors and Scipy
-
-Make sure you are still in the virtual environment of Mycroft, or you can refer to the [4.1.1 Install OpenCV](#411-install-opencv) to enter the virtual environment. Then run the command
-
-```
-pip install scipy
-pip install webcolors
-```
-
-### 4.4.2 Test the function of turning RGB code to name
-
-Go to `cvAPI/test/testRGB2name.py`.
-
-The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
-
-![](3/15.png)
-
-### 4.4.3 exit the virtual environment 
-
-Then run
-```
-deactivate 
-```
-Can exit the virtual environment
-![](3/16.png)
-
-
 
 
 ## 4.5 Add Dependency
