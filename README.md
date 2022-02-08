@@ -53,11 +53,11 @@ Mycroft is a voice assistant platform. In this part, you will install Mycroft, a
 
 You can go to the My Account page to create your own Mycroft account by using your Facebook account or your Google account or your GitHub account or by signing up with your email address and setting your password.
 
-![](2/1.png)
+![](reference/2/1.png)
 
 After log in, you are directed to your Mycroft Home dashboard, you are able to maintain your profile, skills, and devices here. 
 
-![](2/2.png)
+![](reference/2/2.png)
 
 ## 1.2 Install Mycroft
 
@@ -81,18 +81,18 @@ sudo reboot
 Before pairing your device, you should make sure you already have a Mycroft account and you have logged into your account, if you have not created your Mycroft account, you can refer to the 2.1 to create an account.
 Click the Add Device at the home.mycroft.ai account page:
 
-![](2/3.png)
+![](reference/2/3.png)
 
 To add a device in your account, you need a 6-character Registration Code. The Registration Code will be provided when you first run start-mycroft.sh debug to start your Mycroft device.
 
-![](2/4.png)
+![](reference/2/4.png)
 
 
 If there is no 6-character Registration Code displaying to you in CLI, you should type “pair my device” to get the 6-character Registration Code.
 
 After you get the 6-character Registration Code(pairing code) successfully, you should use this pairing code and provide a meaningful name and location for the Device. This will help you in the future if you have multiple devices.
 
-![](2/5.png)
+![](reference/2/5.png)
 
 Once complete the setting, click 'NEXT' to pair the Device. Wait a few seconds, and then you'll be taken to a new screen confirming your Pairing has been successfully completed.
 
@@ -101,7 +101,7 @@ Once complete the setting, click 'NEXT' to pair the Device. Wait a few seconds, 
 1. Install and remove Mycroft skill.
     1. From the skill Marketplace
 
-    ![](2/6.png)
+    ![](reference/2/6.png)
 
 
     You can use either voice installation or command line to install or remove your skill in the Marketplace. 
@@ -111,8 +111,8 @@ Once complete the setting, click 'NEXT' to pair the Device. Wait a few seconds, 
 
     *Hey Mycroft, install {skill name}* \
     *Hey Mycroft, uninstall {skill name}*
-    ![](2/7.png)
-    ![](2/8.png)
+    ![](reference/2/7.png)
+    ![](reference/2/8.png)
 
     Command line(run below commands):
 
@@ -121,8 +121,8 @@ Once complete the setting, click 'NEXT' to pair the Device. Wait a few seconds, 
     mycroft-msm remove skill-name
     ```
 
-![](2/9.png)
-![](2/10.png)
+![](reference/2/9.png)
+![](reference/2/10.png)
 
 If you are in the CLI, you can use `control+c` to go back to the cmd.
 
@@ -137,7 +137,7 @@ mycroft-msm remove github-link
 After installing the skills, you can ask Mycroft some questions related to the intents that the skill has.
 For example:
 
-![](2/11.png)
+![](reference/2/11.png)
 
 2. Get Mycroft skill information. 
 
@@ -169,7 +169,7 @@ Run below commands:
 ls
 ```
 
-![](4/1.png)
+![](reference/4/1.png)
 
 If you can see corresponding MSK files in ‘bin’ directory, you could proceed on further steps. Otherwise you need to install the required MSK.
 Run below commands:
@@ -180,7 +180,7 @@ pip install msk
 pip install msm
 ```
 
-![](4/2.png)
+![](reference/4/2.png)
 
 
 ### 1.5.2  Create New Skill
@@ -197,7 +197,7 @@ mycroft-msk create
 
 If it is your first time to create a new skill, you need to configure your Github name and email address before creating a new skill. If you need to change these in the future, you can use `git --config` to modify them.
 
-![](4/3.png)
+![](reference/4/3.png)
 
 
 Then, you need to file up below fields:
@@ -246,21 +246,21 @@ The example input for this project could be as below:
 > author:
 > `NUS-ISS`
 
-![](4/4.png)
-![](4/5.png)
+![](reference/4/4.png)
+![](reference/4/5.png)
 
 If you want to create a Github repo for the newly created skill, you need to authenticate with Github a Personal Access Token. (website: https://github.com/settings/tokens/new )
 
-![](4/6.png)
-![](4/7.png)
-![](4/8.png)
-![](4/9.png)
+![](reference/4/6.png)
+![](reference/4/7.png)
+![](reference/4/8.png)
+![](reference/4/9.png)
 
 Finally, paste the token to the shell and successfully save the skill under the skill folder of mycroft `/opt/mycroft/skills`. 
-![](4/10.png)
+![](reference/4/10.png)
 
 The same directory hierarchy is pushed to your GitHub repo.
-![](4/11.png)
+![](reference/4/11.png)
 
 ## 1.6 Skill Structure
 
@@ -339,7 +339,7 @@ User will take a photo of the goods shelf in front of him/her. And then ask Mycr
 
 User will take a photo of the goods in his/her hand. And then ask Mycroft what is the item in the hand. Mycroft will also give the detailed information of the goods, for example, the brand, the colour.
 
-![temp](.png)
+![](reference/complete.png)
 
 
 
@@ -392,7 +392,7 @@ def handle_is_there_any_goods(self, message):
 ```
 
 Check with Mycroft that your padatious intents are successfully created.
-![](4/m0.png)
+![](reference/4/m0.png)
 
 ### 3.1.2 Adapt Intents (used in use case 2)
 
@@ -477,9 +477,9 @@ def handle_finish_current_item(self, message):
 
 Check with Mycroft that all your adapt intents are successfully created.
 
-![](4/m1.png)
-![](4/m2.png)
-![](4/m3.png)
+![](reference/4/m1.png)
+![](reference/4/m2.png)
+![](reference/4/m3.png)
 
 ## 3.2 Statement (How to make MyCroft response interactively?)
 
@@ -506,7 +506,7 @@ Padatious Intent: view.goods.intent
 Adapt Intent: FinishOneItem
 
 Check with Mycroft that all simple statements can work successfully.
-![](4/m4.png)
+![](reference/4/m4.png)
 
 
 ### 3.2.2 Statements with variables
@@ -573,10 +573,10 @@ Adapt Intent: ViewItemInHand, AskItemCategory, AskItemColor, AskItemBrand, AskIt
 
 Check with Mycroft that all statements with variables can work successfully.
 
-![](4/m5.png)
-![](4/m6.png)
-![](4/m7.png)
-![](4/m8.png)
+![](reference/4/m5.png)
+![](reference/4/m6.png)
+![](reference/4/m7.png)
+![](reference/4/m8.png)
 
 
 ## 3.3 Conversational Context (How to make the conversation in order?)
@@ -774,7 +774,7 @@ The above example `speak_dialog()` tells the user other things they can do with 
 
 # 4. Voice Assistant Integration (ESA)
 
-![total archi](xx.png)
+![total archi](reference/archi.png)
 
 ## 4.1 To make the ESA see the items (use python program to take a picture)
 
@@ -804,7 +804,7 @@ When we later use the function in Mycroft application, it will be a little diffe
 Make sure you are still in the virtual environment of Mycroft, run the file.
 
 
-![](3/14.png)
+![](reference/3/14.png)
 
 ### 4.1.3 Troubleshooting
 
@@ -812,11 +812,11 @@ In Virtual Box, it may has problem opening the camera.
 
 - Step 1: Enable USB 2.0 or 3.0. Power off the virtual machine, go to `Settings` --> `Ports` --> `USB`. As shown below, click the checkbox.
 
-![](3/17.png)
+![](reference/3/17.png)
 
 - Step 2: Select device. Open virtual machine, in tool bar, `Devices` -> `Webcams` -> the camera for your computer, e.g. Face Time HD Camera (build in). As shown below.
 
-![](3/18.png)
+![](reference/3/18.png)
 
 - Step 3: Install VLC.
 
@@ -843,7 +843,7 @@ Before you get use of the API, you need several steps. You need a credit card to
 - Step 1: Create a Google Cloud account. The account can be the same as your Google account (same email address), and you need to add payment information here.
 Go to https://console.cloud.google.com/freetrial/signup/.
 
-![](3/1.png)
+![](reference/3/1.png)
 
 After you input the payment information verification, you can click START MY FREE TRIAL.
 
@@ -851,27 +851,27 @@ After you input the payment information verification, you can click START MY FRE
 https://console.cloud.google.com/projectselector2/home/dashboard
 Click the CREATE PROJECT
 
-![](3/2.png)
+![](reference/3/2.png)
 
 Give a name to your project. Click CRATE. Here you can use easy shopping.
 
-![](3/3.png)
+![](reference/3/3.png)
 
 - Step 3: Enable Cloud Vision API
 In the project dashboard, and make sure you are still in the ‘easy shopping’ project you just created above, click Go to APIs overview
-![](3/4.png)
+![](reference/3/4.png)
 
 Search cloud vision API, and choose the correct one.
-![](3/5.png)
+![](reference/3/5.png)
 
 Click ENABLE to enable Cloud Vision API
-![](3/6.png)
+![](reference/3/6.png)
 
 - Step 4: create Google API Key
 Make sure you still in the ‘easy shopping’ project, and in the ‘APIs & Services’, click ‘Credentials’, and under CREATE CREDENTIALS, choose ‘API key’
-![](3/7.png)
+![](reference/3/7.png)
 Choose CLOSE. You can copy the API key for further use.
-![](3/8.png)
+![](reference/3/8.png)
 
 ### 4.2.3 Test your Vision API
 
@@ -898,7 +898,7 @@ If you see some response with no error, a key with ‘response’, and other inf
 ```
 
 Then you can go back to Google Cloud Platform, go to ‘APIs & Services’, you can see some statistics of your API calls.
-![](3/10.png)
+![](reference/3/10.png)
 
 If you get a response with a key ‘error’, then you need to read the error message carefully and try to resolve it. A common error may be due to the billing.
 
@@ -907,10 +907,10 @@ If you get a response with a key ‘error’, then you need to read the error me
 ```
 
 In google cloud platform, search ‘billing project’
-![](3/12.png)
+![](reference/3/12.png)
 
  Make sure the billing account of your project is enabled. Below is the wrong status.
-![](3/13.png)
+![](reference/3/13.png)
 
 
 
@@ -933,7 +933,7 @@ Go to `cvAPI/test/testRGB2name.py`.
 
 The main function is getColorNameFromRGB(rgbTuple, xxx, xxx), the first argument is the tuple of RGB code, like (0, 0, 255). The second and third arguments are the same for all the colors, actually they are the colorbase that have all possible color names and corresponding RGB code.
 
-![](3/15.png)
+![](reference/3/15.png)
 
 ### 4.3.3 exit the virtual environment 
 
@@ -942,7 +942,7 @@ Then run
 deactivate 
 ```
 Can exit the virtual environment
-![](3/16.png)
+![](reference/3/16.png)
 
 
 ## 4.4 Integration with ESA
