@@ -585,9 +585,9 @@ Until now, you have created intents and statements so that you can do basic inte
 ### 3.3.1 Add context and remove context
 Unfortunately, context is currently only available with the Adapt Intent Parser, and is not yet available for Padatious. Let’s first use context to deal with the intent order in use case 2.
 
-Let’s review use case 2 again. The relationship among the intents in use case 2 is shown in the figure below. 
+Let's review use case 2 again. The relationship among the intents in use case 2 is shown in the figure below. 
 
-![](case2.png)
+![](reference\case2.png)
 
 Context can be added in one intent, and removed in one intent. And before the user invokes an intent, Mycroft can check whether the context exists or not.
 Then the solution is that, you need to add one context in `ViewItemInHand`, then `AskItemCategory`, `AskItemColor`, `AskItemBrand`, `AskItemKw`, `AskItemInfo` should have this context to be invoked. The context won’t be removed until the user invokes `FinishOneItem` intent.
@@ -598,7 +598,7 @@ There are two ways to add context.
 - Use @adds_context() decorator.
 - Use self.set_context() method.
 
-You might use the second way in this project, since use in a method is more flexible. Later you will see in the integration part, you will do some justification before adding the context. Now you can do this in `ViewItemInHand` intent.
+We use the second method in ESA, since this method provides more control when used with IF/ELSE condiiton inside a defined function using if/else condition, e.g. in later integration workshop with computer vision. Now you can add Context in `ViewItemInHand` intent.
 
 ```python
 @intent_handler(IntentBuilder('ViewItemInHand').require('ViewItemInHandKeyWord'))
@@ -609,7 +609,7 @@ def handle_view_item_in_hand(self, message):
     
     # suppose we use camera to take a photo here, 
     # then the function will return an image path
-    self.img_hand = '/opt/mycroft/skills/sandbox-git-skill.yuyang0828/photo/2.jpeg'
+    self.img_hand = 'Path_To_Image/2.jpeg'
 
     # suppose we call CV API here to get the result, 
     # the result will all be list, then we use generate_str() to create string
@@ -637,9 +637,17 @@ def handle_ask_item_brand(self, message):
 Do this for `AskItemCategory`, `AskItemColor`, `AskItemBrand`, `AskItemKw`, `AskItemInfo` and `FinishOneItem`
 
 3. Remove context
-Similar to adding context, there are two ways to remove context. Since you won’t do any other justification in the  `FinishOneItem` intent, i.e. once the user invokes the `FinishOneItem` intent, the context must be removed, you can use decorator style this time.
+Similar to adding context, there are two ways to remove context. Since you won't do any conditional check in the  `FinishOneItem` intent, i.e. once the user invokes the `FinishOneItem` intent, the context can be removed, you can use decorator style this time.
+
 
 ```python
+# import removes_context
+from mycroft.skills.context import removes_context
+```
+
+
+```python
+# under class EasyShoppingSkill(MycroftSkill):
 @intent_handler(IntentBuilder('FinishOneItem').require('Finish').require('getDetailContext').build())
 @removes_context('getDetailContext')
 def handle_finish_current_item(self, message):
@@ -660,17 +668,25 @@ Just add one more intent after the previous intent. It won’t need the context.
 ```python
 @intent_handler(IntentBuilder('NoContext').one_of('Category', 'Color', 'Brand', 'Kw', 'Info'))
 def handle_no_context2(self, message):
-    self.speak('Please let me have a look at what\'s on your hand first.')
+    self.speak('Please let me have a look at what\'s in your hand first.')
 ```
 
 ### 3.3.2 Another way to control the order
 
-Now you need to deal with the order problem of Padatious intent. 
-Similarly, let’s review the use case 1 and their order relationship.
-![](case1.png)
-Since we cannot use context this time, we use another variable to mark whether the user has invoked the intent or not. 
+Now you need to deal with the ordering needs in Padatious intent. 
+Similarly, let's review the use case 1 and their order relationship.
+![](reference\case1.png)
+Since we cannot use context this time, we use another variable/flag to mark whether the user has invoked the intent or not. 
 
-- Step 1: add one variable self.img_multi in the __init__()
+
+- Step 0: add one variable `LOGSTR` after import seciton
+
+```python
+LOGSTR = '********************====================########## '
+```
+
+
+- Step 1: add one variable `self.img_multi` in the __init__()
 
 ```python
 def __init__(self):
@@ -695,12 +711,12 @@ def handle_view_goods(self, message):
 
     # suppose we use camera to take a photo here, 
     # then the function will return an image path
-    self.img_multi = '/opt/mycroft/skills/sandbox-git-skill.yuyang0828/photo/multi.jpeg'
+    self.img_multi = 'Path_To_Image/multi.jpeg'
 
     self.speak('I find some goods here, you can ask me whatever goods you want.')
 ```
 
-- Step3: add justification in `is.there.any.goods.intent`
+- Step3: add contidions in `is.there.any.goods.intent`, which should follow after above intent is satisfied.
 
 ```python
 @intent_handler('is.there.any.goods.intent')
@@ -957,7 +973,7 @@ def take_photo(img_queue):
     LOG.info(LOGSTR + 'take photo process start')
     cap = cv2.VideoCapture(0)
     img_name = 'cap_img_' + str(time.time()) + '.jpg'
-    img_path = '/opt/mycroft/skills/sandbox-git-skill.yuyang0828/photo/' + img_name
+    img_path = 'Path_To_Image/' + img_name
 
     #<-- Take photo in specific time duration -->
     cout = 0
@@ -1068,7 +1084,7 @@ def handle_is_there_any_goods(self, message):
             self.log.info(self.img_multi)
             if MODE == 'TEST':
                 self.log.info(LOGSTR + 'testing mode, use another image')
-                self.img_multi = '/opt/mycroft/skills/sandbox-git-skill.yuyang0828/photo/multi.jpeg'
+                self.img_multi = 'Path_To_Image/multi.jpeg'
 
             objectlist = getObjLabel.getObjectsThenLabel(self.img_multi)
             label_list = []
