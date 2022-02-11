@@ -842,6 +842,8 @@ pip install opencv-python
 
 ### 4.1.2 Test Taking Pictures
 
+Locate `cvAPI` folder, then copy it into location: `/mycroft-core/skills/easy-shopping-skill/`.
+
 Go to `cvAPI/test/testOpencv.py`, the major function is the `take_photo()`. When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the `test/photo` folder, named with a time stamp. Remember to update the image path in the py file.
 
 ```
@@ -900,7 +902,7 @@ In this project, we choose this pretrained model, Vision API.
 
 ### 4.2.2 Get use of the Vision API
 
-Before you get use of the API, you need several steps. You need a credit card to add the payment information, but it has a free trail and won’t charge you until you upgrade.
+Before you get use of the API, you need several steps. You need a credit card to add the payment information, but it has a free trail and won't charge you until you upgrade (hence don't upgrade if unnecessary).
 
 - Step 1: Create a Google Cloud account. The account can be the same as your Google account (same email address), and you need to add payment information here.
 Go to https://console.cloud.google.com/freetrial/signup/.
@@ -1009,7 +1011,20 @@ Can exit the virtual environment
 
 ## 4.4 Integration with ESA
 
+Import addtinal libs:
+
+```python
+from mycroft.util import LOG
+import time
+import cv2
+import os
+import sys
+from multiprocessing import Process, Queue
+```
+
 ### 4.4.1 Create a function called take_photo()
+
+Remember to update path to image below:
 
 ```python
 def take_photo(img_queue):
@@ -1019,7 +1034,7 @@ def take_photo(img_queue):
     LOG.info(LOGSTR + 'take photo process start')
     cap = cv2.VideoCapture(0)
     img_name = 'cap_img_' + str(time.time()) + '.jpg'
-    img_path = 'Path_To_Image/' + img_name
+    img_path = 'Path_To_Image/' + img_name # Remember to update path to image
 
     #<-- Take photo in specific time duration -->
     cout = 0
