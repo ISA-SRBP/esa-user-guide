@@ -774,15 +774,14 @@ So far we have looked at ways to prompt the Users, and return their response dir
 For implementing this, you can use the expect_response parameter in the `speak_dialog()` method.
 
 ```python
-def handle_ask_item_detail(self, detail, detail_str):
-    if detail_str == '':
-        # add expect_response
-        self.speak_dialog(
-        'cannot.get', {'detail': detail}, expect_response=True) # This calls .dialog file.
-    else:
-        dialog_str = 'item.' + detail
-        # add expect_response
-        self.speak_dialog(dialog_str, {detail: detail_str}, expect_response=True) # This calls .dialog file.
+    def handle_ask_item_detail(self, detail, detail_str):
+        if detail_str == '':
+            # add expect_response
+            self.speak_dialog('cannot.get', {'detail': detail}, expect_response=True) # This calls .dialog file.
+        else:
+            dialog_str = 'item.' + detail
+            # add expect_response
+            self.speak_dialog(dialog_str, {detail: detail_str}, expect_response=True) # This calls .dialog file.
 
 ```
 
