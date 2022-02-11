@@ -788,8 +788,8 @@ def handle_ask_item_detail(self, detail, detail_str):
 
 Adjust below intent handling to use above function accordingly.
 
-```
-@intent_handler(IntentBuilder('AskItemCategory').require('Category').require('getDetailContext').build())
+```python
+    @intent_handler(IntentBuilder('AskItemCategory').require('Category').require('getDetailContext').build())
     def handle_ask_item_category(self, message):
         self.handle_ask_item_detail('category', self.category_str)
 
