@@ -737,7 +737,7 @@ def handle_no_context1(self, message):
     self.speak('Please let me have a look at what\'s in front of you first.')
 ```
 
-## 3.4 Prompts (How to deal with the disorder conversation?)
+## 3.4 Prompts (How to guide user back to correct conversation flow, when conversion goes disorded?)
 
 A prompt is any question or statement spoken by Mycroft that expects a response from the User.
 
@@ -747,13 +747,14 @@ A prompt is any question or statement spoken by Mycroft that expects a response 
 
 - If "yes" or "no" responses are detected, then the method will return the string "yes" or "no". If the response does not contain "yes" or "no" vocabulary then the entire utterance will be returned. If no speech was detected indicating the User did not respond, then the method will return None.
 
-- Let’s look at the ask_yesno() in the use case 1.
+- Let's look at the ask_yesno() in the use case 1.
 
 ```python
+# firstly create do.you.want.to.take.a.photo.dialog 
 def handle_no_context1(self, message):
     self.speak('Please let me have a look at what\'s in front of you first.')
     # add prompts
-    take_photo = self.ask_yesno('do.you.want.to.take.a.photo')
+    take_photo = self.ask_yesno('do.you.want.to.take.a.photo') # This calls .dialog file.
     if take_photo == 'yes':
         self.handle_view_goods(message)
     elif take_photo == 'no':
