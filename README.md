@@ -831,7 +831,6 @@ This library needs to be installed in the virtual environment in Mycroft so that
 Go to the mycroft-core folder, which you have cloned before.
 
 ```
-
 cd ~/mycroft-core # or where ever you cloned Mycroft-core
 
 # activate the virtual environment
@@ -843,12 +842,29 @@ pip install opencv-python
 
 ### 4.1.2 Test Taking Pictures
 
-Go to `cvAPI/test/testOpencv.py`, the major function is the `take_photo()`. When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the `test/photo` folder, named with a time stamp.
+Go to `cvAPI/test/testOpencv.py`, the major function is the `take_photo()`. When you call the function, it opens a window to show what the camera sees, and after 50 frames, it will close the window automatically and take a picture. Then save the image in the `test/photo` folder, named with a time stamp. Remember to update the image path in the py file.
 
-When we later use the function in Mycroft application, it will be a little different, but the logic is the same. Now you just need to make sure your OpenCV library and camera works well.
+```
+# testOpencv.py
 
-Make sure you are still in the virtual environment of Mycroft, run the file.
+import cv2
+import time
 
+def take_photo():
+# ...
+    # Change this variable to the path you want to store the image
+    img_path = './' + img_name
+# ...
+
+```
+
+When we later use the function in ESA, it will have modifications, but the logic is the same. Now you just need to make sure your OpenCV library and camera works well.
+
+Make sure you are still in the virtual environment of Mycroft, and correct path to the test script, then run:
+
+```
+python testOpencv.py 
+```
 
 ![](reference/3/14.png)
 
