@@ -763,13 +763,13 @@ def handle_no_context1(self, message):
         self.speak('I cannot understand what you are saying')
 ```
 
-In the above code, you have asked the user if they want to take a photo, Mycroft will then speak the sentence in the do.you.want.to.take.a.photo.dialog whether they respond yes or no. You may also speak some error dialog if neither yes or no are returned.
+In the above code, you have asked the user if they want to take a photo, Mycroft will then speak the sentence in the do.you.want.to.take.a.photo.dialog whether they respond yes or no. You may also try some dummy response of neither yes nor no.
 
-The ​​EasyShoppingSkill uses `ask_yesno()` two times, one is in the use case 1, another is in the use case 2.
+Easy Shopping Assistant uses `ask_yesno()` twice, one in the use case 1, the other in use case 2.
 
 ### 3.4.2 Add expect_response parameter for returning responses to the intent parser
 
-So far you have looked at ways to prompt the User, and return their response directly to our Skill. It is also possible to speak some dialog, and activate the listener, directing the response back to the standard intent parsing engine. You may do this to let the user trigger another Skill, or because you want to make use of your own intents to handle the response.
+So far we have looked at ways to prompt the Users, and return their response directly to our Skill. It is also possible to speak some dialog, and activate the mycroft listener, directing the response back to the standard mycroft intent parsing engine. You may do this to let the user trigger other mycroft Skill, or because you want to let ESA to determine the most suitable intent to process user request/response.
 
 For implementing this, you can use the expect_response parameter in the `speak_dialog()` method.
 
@@ -778,14 +778,47 @@ def handle_ask_item_detail(self, detail, detail_str):
     if detail_str == '':
         # add expect_response
         self.speak_dialog(
-        'cannot.get', {'detail': detail}, expect_response=True)
+        'cannot.get', {'detail': detail}, expect_response=True) # This calls .dialog file.
     else:
         dialog_str = 'item.' + detail
         # add expect_response
-        self.speak_dialog(dialog_str, {detail: detail_str}, expect_response=True)
+        self.speak_dialog(dialog_str, {detail: detail_str}, expect_response=True) # This calls .dialog file.
+
 ```
 
-The above example `speak_dialog()` tells the user other things they can do with their Mycroft device while they have been told the item’s detailed information, for example the brand, the colour. 
+Adjust below intent handling to use above function accordingly.
+
+```
+@intent_handler(IntentBuilder('AskItemCategory').require('Category').require('getDetailContext').build())
+    def handle_ask_item_category(self, message):
+        self.handle_ask_item_detail('category', self.category_str)
+
+    @intent_handler(IntentBuilder('AskItemColor').require('Color').require('getDetailContext').build())
+    def handle_ask_item_color(self, message):
+        self.handle_ask_item_detail('color', self.color_str)
+
+    @intent_handler(IntentBuilder('AskItemBrand').require('Brand').require('getDetailContext').build())
+    def handle_ask_item_brand(self, message):
+        self.handle_ask_item_detail('brand', self.brand_str)
+
+    @intent_handler(IntentBuilder('AskItemKw').require('Kw').require('getDetailContext').build())
+    def handle_ask_item_keywords(self, message):
+        self.handle_ask_item_detail('keyword', self.kw_str)
+
+    @intent_handler(IntentBuilder('AskItemInfo').require('Info').require('getDetailContext').build())
+    def handle_ask_item_complete_info(self, message):
+        if self.color_str == '':
+            self.handle_ask_item_detail('category', self.category_str)
+        else:
+            self.speak_dialog('item.complete.info', {
+                          'category': self.category_str, 'color': self.color_str})
+        self.handle_ask_item_detail('brand', self.brand_str)
+        self.handle_ask_item_detail('keyword', self.kw_str)
+
+```
+
+
+The above example `speak_dialog()` tells the user other things they can do with their Mycroft device while they have been told the item's detailed information, for example the brand, the colour. 
 
 
 
@@ -803,6 +836,7 @@ This library needs to be installed in the virtual environment in Mycroft so that
 Go to the mycroft-core folder, which you have cloned before.
 
 ```
+
 cd ~/mycroft-core # or where ever you cloned Mycroft-core
 
 # activate the virtual environment
