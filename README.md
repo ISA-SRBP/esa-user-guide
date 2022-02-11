@@ -817,10 +817,6 @@ Adjust below intent handling to use above function accordingly.
 ```
 
 
-The above example `speak_dialog()` tells the user other things they can do with their Mycroft device while they have been told the item's detailed information, for example the brand, the colour. 
-
-
-
 # 4. Voice Assistant Integration (ESA)
 
 ![total archi](reference/archi.png)
