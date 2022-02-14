@@ -1133,6 +1133,16 @@ You can add the try-catch block when calling API since sometimes some error may 
 
 Also, in the testing stage, you may not have an environment to take pictures to do the detection, you can use some existing images. (`MODE` variable in below can handle whether to use the pictures taken by camera or not)
 
+
+Import addtinal libs:
+
+```python
+sys.path.append('/home/ai-user/mycroft-core/skills/easy-shopping-skill/cvAPI') # update path if necessary
+from util import callAPI, encode_image_from_file
+import getObjLabel, getDetail
+```
+
+
 ```python
 @intent_handler('is.there.any.goods.intent')
 def handle_is_there_any_goods(self, message):
