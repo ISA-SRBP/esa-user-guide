@@ -685,19 +685,23 @@ Since we cannot use context this time, we use another variable/flag to mark whet
 LOGSTR = '********************====================########## '
 ```
 
-
 - Step 1: add one variable `self.img_multi` in the __init__()
 
 ```python
-def __init__(self):
-    MycroftSkill.__init__(self)
-    self.category_str = ''
-    self.color_str = ''
-    self.brand_str = ''
-    self.kw_str = ''
-    self.img_multi = ''
-    self.img_hand = ''
-    self.log.info(LOGSTR + "_init_ EasyShoppingSkill")
+# Edit in main class: class EasyShopping(MycroftSkill):
+    def __init__(self):
+        MycroftSkill.__init__(self)
+        self.category_str = ''
+        self.color_str = ''
+        self.brand_str = ''
+        self.kw_str = ''
+        self.img_multi = ''
+        self.img_hand = ''
+        self.log.info(LOGSTR + "_init_ EasyShoppingSkill")
+
+    def initialize(self):
+        self.reload_skill = False
+
 ```
 
 - Step2: `self.img_multi` will have some value after the user takes a picture (this will be done in the integration part). Now you can just give any image path to the variabel.
@@ -714,6 +718,7 @@ def handle_view_goods(self, message):
     self.img_multi = 'Path_To_Image/multi.jpeg'
 
     self.speak('I find some goods here, you can ask me whatever goods you want.')
+
 ```
 
 - Step3: add contidions in `is.there.any.goods.intent`, which should follow after above intent is satisfied.
@@ -1058,6 +1063,8 @@ Using the `take_photo()` function, the photo will be taken in a specific time du
 
 ### 4.4.2 Integration with take_photo()
 
+
+
 Use case 1:
 
 ```python
@@ -1151,53 +1158,53 @@ import getObjLabel, getDetail
 
 
 ```python
-@intent_handler('is.there.any.goods.intent')
-def handle_is_there_any_goods(self, message):
-    if self.img_multi == '':
-        self.handle_no_context1(message)
-    else:
-        # use try-catch block here, since there maybe error return from the cv api
-        try:
-            self.log.info(LOGSTR + 'actual img path')
-            self.log.info(self.img_multi)
-            if MODE == 'TEST':
-                self.log.info(LOGSTR + 'testing mode, use another image')
-                self.img_multi = 'Path_To_Image/multi.jpeg'
+    @intent_handler('is.there.any.goods.intent')
+    def handle_is_there_any_goods(self, message):
+        if self.img_multi == '':
+            self.handle_no_context1(message)
+        else:
+            # use try-catch block here, since there maybe error return from the cv api
+            try:        
+                self.log.info(LOGSTR + 'actual img path')
+                self.log.info(self.img_multi)
+                if MODE == 'TEST':
+                    self.log.info(LOGSTR + 'testing mode, use another image')
+                    self.img_multi = 'Path_To_Image/multi.jpeg' # e.g. self.img_multi = '/home/ai-user/mycroft-core/skills/easy-shopping-skill/cvAPI/test/photo/multi.jpeg'
 
-            objectlist = getObjLabel.getObjectsThenLabel(self.img_multi)
-            label_list = []
-            loc_list = []
-            detected = 0
+                objectlist = getObjLabel.getObjectsThenLabel(self.img_multi)
+                label_list = []
+                loc_list = []
+                detected = 0
 
-            category_label = message.data.get('category')
-
-            for obj in objectlist['objectList']:
-                label_list.append(obj['name'])
-                loc_list.append(obj['loc'])
+                category_label = message.data.get('category')
+    
+                for obj in objectlist['objectList']:
+                    label_list.append(obj['name'])
+                    loc_list.append(obj['loc'])
+            
         
-        
-            for i in range(0,len(label_list)):
-                label_str = generate_str(label_list[i])
-                label_str = label_str.lower()
-        
-                if category_label is not None:
-                    if category_label in label_str:
-                        self.speak_dialog('yes.goods',
-                                    {'category': category_label,
-                                    'location': loc_list[i]})
-                        detected = 1
-                        break
-                else:
-                    continue
+                for i in range(0,len(label_list)):
+                    label_str = generate_str(label_list[i])
+                    label_str = label_str.lower()
+            
+                    if category_label is not None:
+                        if category_label in label_str:
+                            self.speak_dialog('yes.goods',
+                                        {'category': category_label,
+                                        'location': loc_list[i]})
+                            detected = 1
+                            break
+                    else:
+                        continue
+    
+                if detected == 0:
+                    self.speak_dialog('no.goods',
+                    {'category': category_label})
 
-            if detected == 0:
-                self.speak_dialog('no.goods',
-                {'category': category_label})
-
-        except Exception as e:
-            self.log.error((LOGSTR + "Error: {0}").format(e))
-            self.speak_dialog(
-            "exception", {"action": "calling computer vision API"})
+            except Exception as e:
+                self.log.error((LOGSTR + "Error: {0}").format(e))
+                self.speak_dialog(
+                "exception", {"action": "calling computer vision API"})
 
 ```
 
