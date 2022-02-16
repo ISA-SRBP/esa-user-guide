@@ -1126,9 +1126,16 @@ The structure of the return is as follows.
 }
 ```
 
+
+**Your Actions:** Update below customized python lib files in `cvAPI` folder accordingly:
+* `cvAPI/getObjLabel.py` - for use case 1 - update your own sys path and test image path
+* `cvAPI/getDetail.py` - for use case 2 - update your own sys path and test image path
+* `cvAPI/util.py` - common utility file - update to your own Cloud API key
+
+
 ### 4.4.4 Integration with CV API
 
-Now it’s time to replace some variable value with the cv api return.
+Now it's time to replace some variable value with the cv api return.
 You can add the try-catch block when calling API since sometimes some error may return.
 
 Also, in the testing stage, you may not have an environment to take pictures to do the detection, you can use some existing images. (`MODE` variable in below can handle whether to use the pictures taken by camera or not)
