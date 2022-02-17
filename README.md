@@ -699,9 +699,6 @@ LOGSTR = '********************====================########## '
         self.img_hand = ''
         self.log.info(LOGSTR + "_init_ EasyShoppingSkill")
 
-    def initialize(self):
-        self.reload_skill = False
-
 ```
 
 - Step2: `self.img_multi` will have some value after the user takes a picture (this will be done in the integration part). Now you can just give any image path to the variabel.
@@ -1210,6 +1207,19 @@ import getObjLabel, getDetail
 
 The above code example is for use case 1. Do the similar thing for use case 2.
 
+**Note:** If you encounter anomaly of self.img_multi or  self.img_hand not passing from view.goods.intent to is.there.any.goods.intent, please do below to prevent mycroft to auto-reload ESA skill. (But you need to manually refresh ESA for any coding updates from now on, uisng `mycroft-start all restart`):
+
+```python
+# Insert 'def initialize(self) funciton' under main class: 
+# class EasyShopping(MycroftSkill):
+#    def __init__(self):
+#        MycroftSkill.__init__(self)
+#        ... (LOGSTR + "_init_ EasyShoppingSkill")
+
+    def initialize(self):
+        self.reload_skill = False
+
+```
 
 ## 4.5 Add Dependency
 
