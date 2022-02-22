@@ -51,7 +51,7 @@ Mycroft is a voice assistant platform. In this part, you will install Mycroft, a
 
 ## 1.1 Create Your Mycroft Account
 
-You can go to the My Account page to create your own Mycroft account by using your Facebook account or your Google account or your GitHub account or by signing up with your email address and setting your password.
+Go to the MyCroft AI Home webpage https://home.mycroft.ai/ to create your own Mycroft account by using your Facebook account or your Google account or your GitHub account or by signing up with your email address and setting your password.
 
 ![](reference/2/1.png)
 
@@ -70,10 +70,10 @@ Steps of installing Mycroft(run below commands):
 
 ```
 sudo apt-get update
-sudo apt-get install -y alsa pulseaudio
+sudo apt-get install -y alsa pulseaudio vlc
 git clone https://github.com/MycroftAI/mycroft-core.git
 cd mycroft-core
-./dev_setup.sh -fm
+./dev_setup.sh -fm # Force text-2-speech library 'mimic' to build locally
 sudo reboot
 ```
 
